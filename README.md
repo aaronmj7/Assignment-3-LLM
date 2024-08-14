@@ -42,4 +42,50 @@ The dataset is divided into several subsets: a train set containing 127,656 inst
 
 
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Data Pre-Processing
+
+Prior to commencing model training, we thoroughly preprocess the Wiki Toxic dataset.
+The balanced_train dataset is separated into training and validation subsets.
+Due to our restricted computational resources, we choose to use this smaller subset and its inherent balance simplifies our task.
+A validation size of 30% is used and the random seed is set up to guarantee reproducibility.
+
+
+Leveraging the Hugging Face Transformers library, the tokenizer associated with our chosen model is utilized to convert raw comment text into tokenized input suitable for the model.
+The tokenizer is verified to be a fast tokenizer and its maximum token length is determined.
+A custom function, tokenize is defined, which also truncates comments to a maximum length of 128 tokens to run our model on GPUs found on Google Colab. .map method is used to tokenize the whole dataset with the tokenize fucntion.
+
+To ensure a consistent input format for training and validation, a data collator is defined that handles padding.
+
+Tokenized training and validation data is converted into TensorFlow datasets using .to_tf_dataset with the defined data collator and batch size of 16.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Model
+
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Results and Discussion
+
+The model achieved an accuracy of 92% during both training and validation, indicating that it learned the classification task well on balanced datasets. On the imbalanced test set, which contains fewer toxic comments, the model achieved a high Receiver Operating Characteristic - Area Under the Curve (ROC-AUC) score of 0.9552. This indicates that the model has a high overall ability to distinguish between toxic and non-toxic comments.
+
+The classification report shows that the model performs exceptionally well in the non-toxic class, with high precision. However, the recall for the non-toxic class is significantly lower, indicating that the model occasionally misclassifies non-toxic comments as toxic.
+
+In contrast, for the toxic class, the model has a low precision of 0.39, indicating that a significant number of non-toxic comments are incorrectly classified as toxic. This points to a higher rate of false positives. Despite this, the recall for the toxic class is notably high, at 0.94, indicating that the model is extremely effective at identifying the most toxic comments.
+
+These results indicate that while the model performs well on balanced data, its generalization to imbalanced data is limited. The low precision for the toxic class on the imbalanced test set suggests a tendency for false positives, possibly due to the model being overly confident in its toxic predictions. Despite this, the high recall demonstrates the model’s effectiveness in capturing toxic content.
+
+In this context, the trade-off between precision and recall may be acceptable, as misclassifying non-toxic comments as toxic might be more tolerable than failing to identify actual toxic comments. However, this trade-off should be carefully considered, particularly in applications where the cost of false positives is high.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Conclusion
+
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 I hope you find this project insightful and useful!
