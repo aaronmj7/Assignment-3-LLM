@@ -9,7 +9,7 @@ A repository contains my work for Assignment 3 of Research Methods, part of our 
 
 ## Project Overview
 
-
+Fine-tune or train, and deploy a BERT-style Large Language Model(LLM) to do a specified task of your choosing and write a 2-3 page assignment report.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
